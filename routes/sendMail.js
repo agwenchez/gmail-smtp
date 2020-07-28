@@ -34,9 +34,9 @@ const {email,subject, message} = req.body;
     res.send(
         transporter.sendMail(mailOptions, (err, data) => {
             if (err) {
-                return log('Error occurs');
+                return res.send('An error occured');
             }
-            return log('Email sent!!!');
+            return res.send('Email sent successfully');
         })
     )
 })

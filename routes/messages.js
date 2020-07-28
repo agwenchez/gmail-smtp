@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const Messages = require('../models/Pre-msg');
+const Messages = require('../models/Pre-msg');
 
 
 // default route
-router.get('',(req,res)=>{
+router.get('/',(req,res)=>{
     res.send('Predefined messages route works fine')
 })
 
