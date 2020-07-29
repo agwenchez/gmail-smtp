@@ -8,8 +8,8 @@ const API_KEY = process.env.API_KEY;
 const UserName = process.env.username;
 
 
-
-app.post('/send_sms', (req, res) => {
+// send a single SMS
+router.post('/send_sms', (req, res) => {
     const {tel_number,smsMessage}=req.body
 
 

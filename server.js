@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config();
 
+const port = process.env.PORT ;
+
 console.log("MY_CRED:"+process.env.API_KEY);
 console.log("MY_CRED:"+process.env.username);
 
@@ -30,10 +32,9 @@ mongoose.connect(db, {
   .catch(err => console.log(err));
 
 
- 
-  
-const port = process.env.PORT || 4000;
+// import routes
 app.use('/mailer',require('./routes/sendMail'))
 app.use('/messages',require('./routes/messages'));
+app.use('/SMS',require('./routes/sendSMS'));
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
