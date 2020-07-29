@@ -2,42 +2,82 @@ require('dotenv').config();
 
 const nodemailer = require('nodemailer');
 const router = require('./messages');
-const { emit } = require('nodemon');
-// const log = console.log;
+const Messages = require('../models/Pre-msg');
 
-// console.log("MY_CRED:"+process.env.username); 
-//  console.log("MY_CRED:"+process.env.password); 
- 
+
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user:  process.env.username, 
-        pass:  process.env.password
+        user: 'agwenchez254@gmail.com',
+        pass: process.env.password
     }
 });
 
 
 
+// send a single mail with a predefined message
+router.post('/sendMail/single', (req, res) => {
+    const { name, email, subject} = req.body;
+
+
+Messages.findOne({name:subject}).then( result =>{
+    if(result){
+        transporter.sendMail(
+            {
+                from: 'agwenchez254@gmail.com',
+                to: email,
+                subject: `${result.name}`,
+                html: ` <p>Dear ${name},
+                    ${result.message}</p>`
+            },
+    
+            (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+    
+                res.send({ msg: 'Email has been sent' });
+            });
+    }else{
+        res.send('No such predefined message found')
+    }
+})
+
+  
+
+})
 
 
 
-router.post( '/sendMail', (req,res)=>{
-const {email,subject, message} = req.body;
 
-    let mailOptions = {
-        from: 'agwenchez254@gmail.com', 
-        to: email,
-        subject: subject,
-        text: message
-    };
-    res.send(
-        transporter.sendMail(mailOptions, (err, data) => {
-            if (err) {
-                return res.send('An error occured');
-            }
-            return res.send('Email sent successfully');
-        })
-    )
+// send multiple mails with a predefined message
+router.post('/sendMail/multiple', (req, res) => {
+    const { email, subject} = req.body;
+    
+
+Messages.findOne({name:subject}).then( result =>{
+    if(result){
+        transporter.sendMail(
+            {
+                from: 'agwenchez254@gmail.com',
+                to: email,
+                subject: `${result.name}`,
+                html: ` <p>Dear esteemed artist,
+                    ${result.message}</p>`
+            },
+    
+            (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+    
+                res.send({ msg: 'Emails have been sent' });
+            });
+    }else{
+        res.send('No such predefined message found')
+    }
+}).catch(err => res.status(404).json({sucees:false}));
+
 })
 
 module.exports = router;
