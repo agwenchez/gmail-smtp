@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-// require('dotenv').config();
+require('dotenv').config();
 
-
+console.log("MY_CRED:"+process.env.API_KEY);
+console.log("MY_CRED:"+process.env.username);
 
 // Body parser middleware
 app.use(express.json({ extended:false}));
