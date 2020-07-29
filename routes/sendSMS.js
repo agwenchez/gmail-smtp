@@ -17,7 +17,8 @@ const AfricasTalking = require('africastalking')(credentials);
 // Get the SMS service
 const sms = AfricasTalking.SMS;
 
-function sendMessage() {
+// function to send SMS
+function sendMessage(tel_number, smsMessage) {
     const options = {
         // Set the numbers you want to send to in international format
         to: tel_number,
@@ -34,17 +35,18 @@ function sendMessage() {
 }
 
 // send a single SMS
-router.post('/send_sms', (req, res) => {
+router.post('/send_sms/single', (req, res) => {
     const {tel_number,smsMessage}=req.body
 
-
-    console.log(tel_number);
-    
- 
-    sendMessage();
+    sendMessage(tel_number,smsMessage);
     res.status(200).send('Message sent successfully');
 
 
 });
+
+
+
+
+
 
 module.exports = router;
