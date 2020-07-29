@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-   
-
 const app = express();
+// require('dotenv').config();
+
+
 
 // Body parser middleware
 app.use(express.json({ extended:false}));
@@ -27,6 +28,8 @@ mongoose.connect(db, {
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
+
+ 
   
 const port = process.env.PORT || 4500;
 app.use('/mailer',require('./routes/sendMail'))

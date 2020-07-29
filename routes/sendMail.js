@@ -5,17 +5,16 @@ const router = require('./messages');
 const { emit } = require('nodemon');
 // const log = console.log;
 
-
+// console.log("MY_CRED:"+process.env.username); 
+//  console.log("MY_CRED:"+process.env.password); 
+ 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user:  'agwenchez254@gmail.com', 
-        pass:  'Agwera#15'
+        user:  process.env.username, 
+        pass:  process.env.password
     }
 });
-
-
-
 
 
 
