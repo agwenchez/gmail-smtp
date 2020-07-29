@@ -5,8 +5,8 @@ require('dotenv').config();
 
 const port = process.env.PORT ;
 
-console.log("MY_CRED:"+process.env.API_KEY);
-console.log("MY_CRED:"+process.env.username);
+// console.log("MY_CRED:"+process.env.API_KEY);
+// console.log("MY_CRED:"+process.env.username);
 
 // Body parser middleware
 app.use(express.json({ extended:false}));

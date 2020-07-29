@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 require('dotenv').config();
-
+const Messages = require('../models/Pre-msg');
 
 
 const API_KEY = process.env.API_KEY;
@@ -34,16 +34,40 @@ function sendMessage(tel_number, smsMessage) {
         .catch(console.log);
 }
 
-// send a single SMS
-router.post('/send_sms/single', (req, res) => {
-    const {tel_number,smsMessage}=req.body
+// send multiple SMS
+router.post('/send_sms/multiple', (req, res) => {
+    const {subject, tel_number}=req.body;
 
-    sendMessage(tel_number,smsMessage);
-    res.status(200).send('Message sent successfully');
+    Messages.findOne({name:subject}).then( result =>{
+        if(result){
+            // res.json(result);
+            smsMessage = result.message
+            console.log(smsMessage);
+            sendMessage(tel_number,smsMessage);
+            res.status(200).send('Message sent successfully');
+        }else{
+            res.status(404).send('No such predefined message')
+        }
+    })
 
 
 });
 
+
+// send single SMS
+router.post('/send_sms/single', (req, res) => {
+    const {subject, tel_number}=req.body;
+
+    Messages.findOne({name:subject}).then( result =>{
+        if(result){
+            smsMessage = result.message
+            sendMessage(tel_number,smsMessage);
+            res.status(200).send('Message sent successfully');
+        }else{
+            res.status(404).send('No such predefined message')
+        }
+    })
+});
 
 
 
