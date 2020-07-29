@@ -3,14 +3,14 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 const router = require('./messages');
 const { emit } = require('nodemon');
-const log = console.log;
+// const log = console.log;
 
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user:  'agwenchez254@gmail.com', 
-        pass:  'XXXXXX'
+        pass:  'Agwera#15'
     }
 });
 

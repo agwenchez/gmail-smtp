@@ -47,12 +47,57 @@ router.get('/msgs', (req,res)=>{
     }).catch(err => res.status(404).json({sucees:false}));
 })
 
+
+// update a message
+router.put('/update-msg/:id', (req,res)=>{
+
+let messages = {};
+const {name, message} =req.body;
+
+messages.name = name;
+messages.message = message;
+
+Messages.updateOne({ _id: req.params.id}, messages,(err)=>{
+if(err){
+    throw err;
+}else{
+    return res.send('record updated successfully');
+}
+} )
+
+
+})
+
+
+
+
 // delete a predefined message
 router.delete('/delete-msgs/:id', (req,res)=>{
     Messages.findById(req.params.id).then( result => {
         result.remove().then( ()=>res.send('deleted successfully'));
     }).catch(err => res.status(404).json({sucees:false}));
 }) 
+
+router.post('/update-messages/:id', (req,res)=>{
+   
+    const {name, message} =req.body;
+
+    Messages.findByIdAndUpdate(req.params.id, {
+        $set: {
+           name,
+           message
+        }
+    }, err=>{
+        if(err){
+            throw err;
+        }else{
+            return res.send('record updated successfully');
+        }
+        });
+
+   
+}) 
+
 
 
 module.exports = router;
