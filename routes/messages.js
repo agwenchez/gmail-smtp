@@ -11,7 +11,7 @@ router.get('/',(req,res)=>{
 // create a new predefined message
 router.post('/create-msg', (req,res)=>{
 
-    const {name, message} =req.body;
+    const {name, category, message} =req.body;
 
     Messages.findOne({
         name
@@ -24,6 +24,7 @@ router.post('/create-msg', (req,res)=>{
             // create new message
             const newMessage = new Messages({
                 name,
+                category,
                 message
             })
             newMessage.save()
