@@ -53,11 +53,11 @@ router.get('/msgs', (req,res)=>{
 router.put('/update-msg/:id', (req,res)=>{
 
 let messages = {};
-const {name, message} =req.body;
+const {name,category, message} =req.body;
 
 messages.name = name;
 messages.message = message;
-
+messages.category = category;
 Messages.updateOne({ _id: req.params.id}, messages,(err)=>{
 if(err){
     throw err;
